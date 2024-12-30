@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getPageStructure } from "./Utils/DynamicContent/GetPageStructure";
 import { getSiteSettings } from "./Utils/GetContent/GetSettings";
-import setMetaInfo from "./Utils/SEO/SetMetaInfo";
+import { setMetaInfo } from "./Utils/SEO/SetMetaInfo";
 import Content from "./Content"; // Access menus directly
 
 const useThemeContent = (pageId) => {

@@ -3,95 +3,120 @@
  * Dynamically sets the document's main meta tags.
  */
 
-import Content from "../../Content"; // Import your CMS content
+export const setMetaInfo = ({
+  title,
+  description,
+  keywords = [],
+  siteTitle,
+  author,
+  image = null, // New parameter for Open Graph/Twitter card images
+  url = window.location.href, // Use the current page URL as default
+}) => {
+  console.log("setMetaInfo: Setting meta information", { title, description, keywords, siteTitle, author });
 
-/**
- * Generates metadata based on the current page slug.
- * @param {string} pageSlug - The slug of the current page.
- */
-const generateMetadata = (pageSlug) => {
-  const siteSettings = Content.siteSettings;
-  const page =
-    Content.pages.find((p) => p.slug === pageSlug) ||
-    Content.pages.find((p) => p.id === "home");
+  // Set the document title
+  const fullTitle = title !== "Untitled Page" ? `${title} - ${siteTitle}` : siteTitle;
+  document.title = fullTitle;
+  console.log("Document title set:", document.title);
 
-  return {
-    title: page?.title || siteSettings.siteTitle,
-    description: page?.description || siteSettings.siteDescription,
-    keywords: siteSettings.keywords || [],
-    author: siteSettings.businessOwner,
-    url: `${window.location.origin}${page?.slug || "/"}`,
-    image: page?.featuredImage || siteSettings.siteLogo,
+  // Meta description
+  let metaDescription = document.querySelector("meta[name='description']");
+  if (!metaDescription) {
+    metaDescription = document.createElement("meta");
+    metaDescription.name = "description";
+    document.head.appendChild(metaDescription);
+  }
+  metaDescription.content = description;
+
+  // Meta keywords
+  let metaKeywords = document.querySelector("meta[name='keywords']");
+  if (!metaKeywords) {
+    metaKeywords = document.createElement("meta");
+    metaKeywords.name = "keywords";
+    document.head.appendChild(metaKeywords);
+  }
+  metaKeywords.content = keywords.join(", ");
+  console.log("Meta keywords set:", metaKeywords.content);
+
+  // Meta author
+  let metaAuthor = document.querySelector("meta[name='author']");
+  if (!metaAuthor) {
+    metaAuthor = document.createElement("meta");
+    metaAuthor.name = "author";
+    document.head.appendChild(metaAuthor);
+  }
+  metaAuthor.content = author;
+
+  console.log("Meta author set:", metaAuthor.content);
+
+  // Canonical URL
+  let canonicalLink = document.querySelector("link[rel='canonical']");
+  if (!canonicalLink) {
+    canonicalLink = document.createElement("link");
+    canonicalLink.rel = "canonical";
+    document.head.appendChild(canonicalLink);
+  }
+  canonicalLink.href = url;
+  console.log("Canonical URL set:", canonicalLink.href);
+
+  // Inject structured data (Schema.org JSON-LD)
+  const scriptId = "structured-data";
+  let structuredDataScript = document.getElementById(scriptId);
+  if (!structuredDataScript) {
+    structuredDataScript = document.createElement("script");
+    structuredDataScript.id = scriptId;
+    structuredDataScript.type = "application/ld+json";
+    document.head.appendChild(structuredDataScript);
+  }
+
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: fullTitle, // Append siteTitle
+    description: description,
+    url,
+    ...(image && { image }),
   };
-};
 
-/**
- * Injects metadata into the HTML <head>.
- * @param {object} metadata - The metadata object.
- */
-const injectMetadata = ({ title, description, keywords, author, url, image }) => {
-  // Set document title
-  document.title = title;
+  structuredDataScript.textContent = JSON.stringify(schemaData, null, 2);
+  console.log("Structured data set:", schemaData);
 
-  // Define metadata fields
-  const metaTags = {
-    description,
-    keywords: keywords.join(", "),
-    author,
-    "og:title": title,
+  // Open Graph meta tags
+  const ogTags = {
+    "og:title": fullTitle, // Append siteTitle
     "og:description": description,
-    "og:url": url,
     "og:image": image,
+    "og:url": url,
     "og:type": "website",
-    "twitter:title": title,
+  };
+
+  for (const [property, content] of Object.entries(ogTags)) {
+    let tag = document.querySelector(`meta[property='${property}']`);
+    if (!tag) {
+      tag = document.createElement("meta");
+      tag.setAttribute("property", property);
+      document.head.appendChild(tag);
+    }
+    tag.content = content;
+    console.log(`Open Graph tag set: ${property} = ${content}`);
+  }
+
+  // Twitter Card meta tags
+  const twitterTags = {
+    "twitter:title": fullTitle, // Append siteTitle
     "twitter:description": description,
     "twitter:image": image,
     "twitter:card": "summary_large_image",
-    canonical: url,
   };
 
-  // Add or update meta tags dynamically
-  Object.entries(metaTags).forEach(([name, content]) => {
-    let element;
-
-    if (name === "canonical") {
-      // Handle canonical links separately
-      element = document.querySelector(`link[rel="canonical"]`);
-      if (!element) {
-        element = document.createElement("link");
-        element.rel = "canonical";
-        document.head.appendChild(element);
-      }
-    } else if (name.startsWith("og:") || name.startsWith("twitter:")) {
-      // Handle Open Graph and Twitter meta tags
-      element = document.querySelector(`meta[property="${name}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute("property", name);
-        document.head.appendChild(element);
-      }
-    } else {
-      // Handle regular meta tags
-      element = document.querySelector(`meta[name="${name}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute("name", name);
-        document.head.appendChild(element);
-      }
+  for (const [name, content] of Object.entries(twitterTags)) {
+    let tag = document.querySelector(`meta[name='${name}']`);
+    if (!tag) {
+      tag = document.createElement("meta");
+      tag.setAttribute("name", name);
+      document.head.appendChild(tag);
     }
-
-    element.setAttribute("content", content);
-  });
+    tag.content = content;
+    console.log(`Twitter tag set: ${name} = ${content}`);
+  }
 };
-
-/**
- * Handles metadata generation and injection based on the current page slug.
- * @param {string} pageSlug - The slug of the current page.
- */
-const SetMetaInfo = (pageSlug) => {
-  const metadata = generateMetadata(pageSlug);
-  injectMetadata(metadata);
-};
-
-// Export the metadata handling functions for reuse
-export default SetMetaInfo;
