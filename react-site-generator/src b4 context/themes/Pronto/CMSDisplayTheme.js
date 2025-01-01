@@ -1,7 +1,7 @@
-// src/themes/Pronto/CMSDisplayTheme.js
+// CMSDisplayTheme.js
 import React from "react";
-import { useCMSContext } from "../../CMS/CMSContext"; // Import our context
-import MenuManager from "./Components/Menu/MenuManager";
+import useThemeContent from "../../CMS/ThemeContentBridge";
+import MenuManager from "./Components/Menu/MenuManager"; // Import MenuManager
 import HomeHero from "./Sections/Hero/Hero";
 import GenericHero from "./Sections/Hero/Hero2";
 import About from "./Sections/About/About";
@@ -18,7 +18,6 @@ import Process from "./Sections/Process";
 import WhyChooseUs from "./Sections/About/WhyChooseUs";
 import Benefits from "./Sections/About/Benefits";
 
-// Map section keys to components
 const sectionComponents = {
   about: About,
   services: Services,
@@ -33,21 +32,22 @@ const sectionComponents = {
   benefits: Benefits,
 };
 
-const CMSDisplayTheme = () => {
-  // Instead of using a prop-based approach, we read from CMSContext
-  const { loading, pageStructure, siteSettings, pageId } = useCMSContext();
+const CMSDisplayTheme = ({ pageId }) => {
+  const { pageStructure, siteSettings, loading } = useThemeContent(pageId);
 
   if (loading || !pageStructure) {
     return <p>Loading...</p>;
   }
 
-  // Build a menu manager from siteSettings (which has queries)
+  // Initialize MenuManager
   const menuManager = new MenuManager(siteSettings);
 
-  const { title, description, sections } = pageStructure;
+  const { title, description, sections, slug } = pageStructure;
+  console.log("MenuManager instance:", menuManager);
 
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Pass menuManager to Header */}
       <Header menuManager={menuManager} siteSettings={siteSettings} />
 
       {pageId === "home" ? (
@@ -58,7 +58,7 @@ const CMSDisplayTheme = () => {
 
       <main className="flex-grow">
         {sections
-          .filter(({ key }) => key !== "hero") // Exclude hero
+          .filter(({ key }) => key !== "hero") // Exclude 'hero' key
           .map(({ key, data }) => {
             const SectionComponent = sectionComponents[key];
             return SectionComponent ? (
@@ -69,6 +69,7 @@ const CMSDisplayTheme = () => {
           })}
       </main>
 
+      {/* Pass menuManager to Footer */}
       <Footer menuManager={menuManager} siteSettings={siteSettings} />
     </div>
   );

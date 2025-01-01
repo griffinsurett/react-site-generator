@@ -1,0 +1,9 @@
+/* index.css */
+
+/* Import Tailwind's base, components, and utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can add any custom styles below if necessary */
+/* Since we're migrating to Tailwind, we'll minimize custom CSS */
