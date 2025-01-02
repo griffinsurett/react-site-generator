@@ -2,6 +2,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const Footer = ({ menuManager, siteSettings, isSticky }) => {
   const footerMenu = menuManager.getFlatMenu("Footer");
@@ -10,37 +11,49 @@ const Footer = ({ menuManager, siteSettings, isSticky }) => {
   return (
     <footer
       className={`py-4 px-5 ${
-        isSticky = false ? "sticky bottom-0" : "relative"
+        isSticky ? "sticky bottom-0" : "relative"
       } flex flex-col justify-center items-center text-center`}
       style={{
-        zIndex: 1000, // Apply zIndex only if sticky
+        zIndex: isSticky ? 1000 : "auto", // Apply zIndex only if sticky
       }}
+      role="contentinfo"
     >
-      {/* Footer Menu */}
-      <ul className="flex flex-wrap mb-2">
-        {footerMenu.map((item, index) => (
-          <li key={index} className="mx-2">
-            <a href={item.link || item.slug} className="hover:underline">
-              {item.title}
-            </a>
-          </li>
-        ))}
-      </ul>
+      {/* Footer Navigation */}
+      <nav aria-label="Footer Navigation" className="mb-2">
+        <ul className="flex flex-wrap justify-center space-x-4">
+          {footerMenu.map((item, index) => (
+            <li key={index}>
+              {item.slug ? (
+                <Link to={item.slug} className="hover:underline">
+                  {item.title}
+                </Link>
+              ) : (
+                <a href={item.link} className="hover:underline">
+                  {item.title}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-      {/* Social Menu */}
-      <ul className="flex">
-        {socialMenu.map((item, index) => (
-          <li key={index}>
-            <a
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={item.icon} size="lg" />
-            </a>
-          </li>
-        ))}
-      </ul>
+      {/* Social Media Links */}
+      <nav aria-label="Social Media Links" className="mb-2">
+        <ul className="flex space-x-4">
+          {socialMenu.map((item, index) => (
+            <li key={index}>
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={item.title} // Descriptive aria-label
+              >
+                <FontAwesomeIcon icon={item.icon} size="lg" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       {/* Footer Text */}
       <p className="text-sm">{siteSettings.Copyright}</p>

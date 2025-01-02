@@ -32,12 +32,12 @@ const ListItem = ({
   slug,
   linkText = "Learn More",
   titleClass = "text-lg font-semibold",
-  descriptionClass,
+  descriptionClass = "text-gray-600",
   mediaClass,
-  buttonClass,
+  buttonClass = "mt-2",
 }) => {
   return (
-    <div className="flex flex-col items-start mb-6">
+    <article className="flex flex-col items-start mb-6" aria-labelledby={`listitem-title-${slug || title}`}>
       {/* Icon or Image */}
       {image ? (
         <Image
@@ -49,14 +49,17 @@ const ListItem = ({
         icon && (
           <Icon
             icon={icon}
-            className={`text-2xl${mediaClass}`}
+            className={`text-2xl ${mediaClass}`}
+            ariaLabel={`${title} icon`}
           />
         )
       )}
 
       {/* Title */}
       {title && (
-        <h3 className={`font-semibold ${titleClass}`}>{title}</h3>
+        <h3 id={`listitem-title-${slug || title}`} className={`font-semibold ${titleClass}`}>
+          {title}
+        </h3>
       )}
 
       {/* Description */}
@@ -66,11 +69,15 @@ const ListItem = ({
 
       {/* Button */}
       {hasPage && slug && (
-        <Button to={slug} className={`${buttonClass} hover:underline`}>
+        <Button
+          to={slug}
+          className={`${buttonClass} hover:underline`}
+          ariaLabel={`Learn more about ${title}`}
+        >
           {`See ${title || "Item"} details`}
         </Button>
       )}
-    </div>
+    </article>
   );
 };
 

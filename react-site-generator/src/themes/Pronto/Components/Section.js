@@ -7,6 +7,7 @@ const Section = ({
   id = "",
   style = {},
   children,
+  ariaLabel,
   ...restProps
 }) => {
   return (
@@ -14,6 +15,7 @@ const Section = ({
       className={`${className} flex flex-col justify-center items-center text-center`}
       id={id}
       style={style}
+      aria-label={ariaLabel}
       {...restProps}
     >
       {children}
@@ -26,6 +28,7 @@ Section.propTypes = {
   id: PropTypes.string,
   style: PropTypes.object,
   children: PropTypes.node.isRequired,
+  ariaLabel: PropTypes.string, // ARIA label for the section
 };
 
 export default Section;

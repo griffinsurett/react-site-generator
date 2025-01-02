@@ -57,7 +57,7 @@ const CMSDisplayTheme = () => {
       )}
 
       {/* Replace <div> with <main> for semantic HTML */}
-      <main className="flex-grow" role="main">
+      <main className="flex-grow" role="main" aria-labelledby="page-title">
         {sections
           .filter(({ key }) => key !== "hero") // Exclude hero
           .map(({ key, data }) => {

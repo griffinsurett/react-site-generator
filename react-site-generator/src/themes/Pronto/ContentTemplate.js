@@ -27,23 +27,23 @@ const ContentTemplate = ({
 
   // Determine whether to display the section button
   const displaySectionButton =
-  ifHero || // Check if section is a hero
-  (ifButton && 
-   hasPage !== false && 
-   sectionSlug && // Ensure sectionSlug exists
-   (ifHero || sectionSlug !== currentSlug)); // Exclude current section
+    ifHero || // Check if section is a hero
+    (ifButton &&
+      hasPage !== false &&
+      sectionSlug && // Ensure sectionSlug exists
+      (ifHero || sectionSlug !== currentSlug)); // Exclude current section
 
-  console.log("Display Section Button:", displaySectionButton); // Debugging
-
-  console.log("Current Slug:", currentSlug);
-  console.log("Section Slug:", sectionSlug);  
+  // Debugging logs can be removed in production
+  // console.log("Display Section Button:", displaySectionButton); 
+  // console.log("Current Slug:", currentSlug);
+  // console.log("Section Slug:", sectionSlug);  
 
   return (
     <div className={`content-template ${className}`}>
       
       {/* Title */}
       {title && (
-        <h5 className={`${titleClass}`}>
+        <h5 className={`${titleClass} text-sm font-medium text-gray-500`}>
           {title}
         </h5>
       )}
@@ -52,13 +52,11 @@ const ContentTemplate = ({
       {heading && (
         <>
           {ifHero ? (
-            <h1 className={`${headingClass}`}>
-              {heading}
-            </h1>
+            <header>
+              <h1 className={`${headingClass} text-4xl font-bold`}>{heading}</h1>
+            </header>
           ) : (
-            <h2 className={`${headingClass}`}>
-              {heading}
-            </h2>
+            <h2 className={`${headingClass} text-2xl font-semibold`}>{heading}</h2>
           )}
         </>
       )}
@@ -67,7 +65,7 @@ const ContentTemplate = ({
       {ifParagraph && showParagraphs && paragraphs.length > 0 && (
         <div>
           {paragraphs.map((paragraph, index) => (
-            <p key={index} className="mb-4">
+            <p key={index} className="mb-4 text-gray-700">
               {paragraph}
             </p>
           ))}
@@ -80,7 +78,7 @@ const ContentTemplate = ({
       {/* Section Button */}
       {displaySectionButton && (
         <div className="mt-4">
-          <Button to={sectionSlug}>
+          <Button to={sectionSlug} ariaLabel={`Navigate to ${sectionButtonText}`}>
             {sectionButtonText}
           </Button>
         </div>
