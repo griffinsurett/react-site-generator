@@ -19,10 +19,14 @@ const Header = ({ siteSettings, menuManager, isSticky }) => {
       <div className="flex justify-between items-center">
         {/* Left section */}
         <div className="flex items-center">
-          <Link to="/" className="flex items-center" aria-label="Navigate to Home Page">
+          <Link
+            to="/"
+            className="flex items-center"
+            aria-label="Navigate to Home Page"
+          >
             <Image
               src={siteSettings.siteLogo}
-              alt={`${siteSettings.siteTitle} logo`}
+              alt={`${siteSettings.siteTitle} logo`} // Dynamic alt text
               className="w-16 mr-3"
             />
             <h1 className="text-xl font-semibold">{siteSettings.siteTitle}</h1>

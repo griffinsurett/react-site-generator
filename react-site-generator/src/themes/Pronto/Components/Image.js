@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
  *
  * Props:
  * - src: The source URL of the image.
- * - alt: Alternative text for the image. If decorative, set decorative=true and omit alt.
+ * - alt: Alternative text for the image. Required if decorative is false.
  * - className: Additional CSS classes for customization.
  * - width: Width of the image.
  * - height: Height of the image.
@@ -36,9 +36,19 @@ const Image = ({ src, alt, className = "", width, height, srcSet, sizes, decorat
   );
 };
 
+// Custom prop type validator for conditional `alt` requirement
+const altPropType = (props, propName, componentName) => {
+  if (!props.decorative && !props[propName]) {
+    return new Error(
+      `The prop \`${propName}\` is marked as required in \`${componentName}\` when \`decorative\` is false.`
+    );
+  }
+  return null;
+};
+
 Image.propTypes = {
   src: PropTypes.string.isRequired,
-  alt: PropTypes.string, // Make alt optional if decorative
+  alt: altPropType, // Conditionally required
   className: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

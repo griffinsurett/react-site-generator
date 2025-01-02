@@ -5,27 +5,11 @@ import Image from "./Image"; // Import the Image component
 import Icon from "./Icon"; // Import the Icon component
 import Button from "./Button"; // Import the Button component
 
-/**
- * ListItem Component
- *
- * Renders a list item with either an icon or an image, along with title, description, and an optional button.
- *
- * Props:
- * - icon: The FontAwesome icon object.
- * - image: The source URL for the image.
- * - title: The title text.
- * - description: The description text.
- * - hasPage: Boolean indicating if a page exists for the item.
- * - slug: The internal link slug for navigation.
- * - linkText: The text for the button (default: "Learn More").
- * - titleClass: Additional CSS classes for the title.
- * - descriptionClass: Additional CSS classes for the description.
- * - mediaClass: Additional CSS classes for the icon/image.
- * - buttonClass: Additional CSS classes for the button.
- */
 const ListItem = ({
   icon,
   image,
+  imageAltText, // New prop for dynamic alt text
+  isDecorative, // New prop to mark image as decorative
   title,
   description,
   hasPage,
@@ -42,9 +26,9 @@ const ListItem = ({
       {image ? (
         <Image
           src={image}
-          alt="" // Mark as decorative if the title already describes the content
+          alt={!isDecorative ? imageAltText : ""}
           className={`w-24 h-24 ${mediaClass}`}
-          decorative={true}
+          decorative={isDecorative}
         />
       ) : (
         icon && (
@@ -85,6 +69,8 @@ const ListItem = ({
 ListItem.propTypes = {
   icon: PropTypes.object, // FontAwesome icon object
   image: PropTypes.string, // Image URL
+  imageAltText: PropTypes.string, // Dynamic alt text for image
+  isDecorative: PropTypes.bool, // If the image is decorative
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   hasPage: PropTypes.bool, // Indicates if the item has an associated page
@@ -100,6 +86,8 @@ ListItem.defaultProps = {
   hasPage: false,
   slug: "",
   linkText: "Learn More",
+  imageAltText: "", // Default empty alt text
+  isDecorative: true, // Default to decorative
   titleClass: "text-lg font-semibold",
   descriptionClass: "text-gray-600",
   mediaClass: "",
