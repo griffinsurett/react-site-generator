@@ -20,6 +20,8 @@ const ProcessSection = ({ data }) => {
               <ListItem
                 icon={icon}
                 image={featuredImage}
+                imageAltText="" // Empty alt text for decorative images
+                ImageIsDecorative={true} // Marking the image as decorative
                 title={title}
                 description={description}
                 hasPage={hasPage}

@@ -9,7 +9,7 @@ const ListItem = ({
   icon,
   image,
   imageAltText, // New prop for dynamic alt text
-  isDecorative, // New prop to mark image as decorative
+  ImageIsDecorative, // New prop to mark image as decorative
   title,
   description,
   hasPage,
@@ -26,9 +26,9 @@ const ListItem = ({
       {image ? (
         <Image
           src={image}
-          alt={!isDecorative ? imageAltText : ""}
+          alt={!ImageIsDecorative ? imageAltText : ""}
           className={`w-24 h-24 ${mediaClass}`}
-          decorative={isDecorative}
+          decorative={ImageIsDecorative}
         />
       ) : (
         icon && (
@@ -70,7 +70,7 @@ ListItem.propTypes = {
   icon: PropTypes.object, // FontAwesome icon object
   image: PropTypes.string, // Image URL
   imageAltText: PropTypes.string, // Dynamic alt text for image
-  isDecorative: PropTypes.bool, // If the image is decorative
+  ImageIsDecorative: PropTypes.bool, // If the image is decorative
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   hasPage: PropTypes.bool, // Indicates if the item has an associated page
@@ -87,7 +87,7 @@ ListItem.defaultProps = {
   slug: "",
   linkText: "Learn More",
   imageAltText: "", // Default empty alt text
-  isDecorative: true, // Default to decorative
+  ImageIsDecorative: true, // Default to decorative
   titleClass: "text-lg font-semibold",
   descriptionClass: "text-gray-600",
   mediaClass: "",

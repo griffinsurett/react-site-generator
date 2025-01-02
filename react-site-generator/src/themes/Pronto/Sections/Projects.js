@@ -19,6 +19,7 @@ const Projects = ({ data }) => {
             <ListItem
               icon={icon}
               image={featuredImage}
+              imageAltText={title}
               title={title}
               description={description}
               hasPage={hasPage}
