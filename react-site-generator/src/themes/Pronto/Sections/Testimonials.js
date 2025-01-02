@@ -18,10 +18,12 @@ const Testimonials = ({ data }) => {
           // Define how to render each testimonial
           ItemComponent={({ quote, name, position }) => (
             <div>
-              <blockquote className="italic text-lg">"{quote}"</blockquote>
-              <p>
+              <blockquote className="italic text-lg" cite={`#testimonial-${name}`}>
+                "{quote}"
+              </blockquote>
+              <cite id={`testimonial-${name}`} className="text-sm text-gray-700">
                 <strong>{name}</strong>, {position}
-              </p>
+              </cite>
             </div>
           )}
           // Tailwind or custom classes for styling the container of items

@@ -1,8 +1,14 @@
-// Hamburger.js
+// HamburgerIcon.js
 import React from "react";
 
 const Hamburger = ({ isMenuOpen, toggleMenu }) => (
-  <div className="flex flex-col justify-between w-6 h-6 cursor-pointer" onClick={toggleMenu}>
+  <div
+    className="flex flex-col justify-between w-6 h-6 cursor-pointer"
+    onClick={toggleMenu}
+    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+    aria-expanded={isMenuOpen}
+    aria-controls="hamburger-menu"
+  >
     <span
       className={`block h-0.5 bg-gray-800 transform transition-transform duration-300 ${
         isMenuOpen ? "rotate-45 translate-y-1.5" : ""

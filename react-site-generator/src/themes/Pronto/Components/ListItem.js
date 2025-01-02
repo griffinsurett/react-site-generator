@@ -1,4 +1,4 @@
-// themes/Pronto/Components/ListItem.js
+// ListItem.js
 import React from "react";
 import PropTypes from "prop-types";
 import Image from "./Image"; // Import the Image component
@@ -42,8 +42,9 @@ const ListItem = ({
       {image ? (
         <Image
           src={image}
-          alt={title}
+          alt="" // Mark as decorative if the title already describes the content
           className={`w-24 h-24 ${mediaClass}`}
+          decorative={true}
         />
       ) : (
         icon && (

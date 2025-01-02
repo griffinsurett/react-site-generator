@@ -13,25 +13,27 @@ const ProcessSection = ({ data }) => {
   return (
     <Section id="process">
       <ContentTemplate data={data} sectionButtonText="Learn About Our Process">
-        <ItemsTemplate
-          items={items}
-          ItemComponent={({ icon, featuredImage, title, description, hasPage, slug }) => (
-            <ListItem
-              icon={icon}
-              image={featuredImage} // Map featuredImage to image
-              title={title}
-              description={description}
-              hasPage={hasPage}
-              slug={slug}
-              linkText={`See ${title || "Step"} details`}
-              mediaClass="text-yellow-500" // Example customization
-              buttonClass="mt-2"
-            />
-          )}
-          containerClass="flex flex-col space-y-6"
-          layout="flex flex-col"
-          emptyComponent={<p className="text-center">No process steps available.</p>}
-        />
+        <ol className="flex flex-col space-y-6 list-decimal list-inside">
+          <ItemsTemplate
+            items={items}
+            ItemComponent={({ icon, featuredImage, title, description, hasPage, slug }) => (
+              <ListItem
+                icon={icon}
+                image={featuredImage}
+                title={title}
+                description={description}
+                hasPage={hasPage}
+                slug={slug}
+                linkText={`See ${title || "Step"} details`}
+                mediaClass="text-yellow-500"
+                buttonClass="mt-2"
+              />
+            )}
+            containerClass="flex flex-col space-y-6"
+            layout="flex flex-col"
+            emptyComponent={<p className="text-center">No process steps available.</p>}
+          />
+        </ol>
       </ContentTemplate>
     </Section>
   );

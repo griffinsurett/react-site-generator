@@ -22,7 +22,7 @@ const Header = ({ siteSettings, menuManager, isSticky }) => {
           <Link to="/" className="flex items-center" aria-label="Navigate to Home Page">
             <Image
               src={siteSettings.siteLogo}
-              alt={siteSettings.siteTitle}
+              alt={`${siteSettings.siteTitle} logo`}
               className="w-16 mr-3"
             />
             <h1 className="text-xl font-semibold">{siteSettings.siteTitle}</h1>

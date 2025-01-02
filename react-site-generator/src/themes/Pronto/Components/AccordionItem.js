@@ -1,4 +1,4 @@
-// themes/Pronto/Components/AccordionItem.js
+// AccordionItem.js
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -12,7 +12,7 @@ const AccordionItem = ({ title, description, isActive, onClick, id }) => {
         className="accordion-checkbox sr-only"
         checked={isActive}
         onChange={onClick}
-        aria-hidden="false"
+        aria-hidden="true" // Corrected to hide from assistive technologies
       />
 
       {/* Label Acting as Toggle Button */}
