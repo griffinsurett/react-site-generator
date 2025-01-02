@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 const MenuList = ({ items }) => (
   <>
     {items.map((item, index) => (
-      <MenuItem key={item.slug || index} item={item} id={`menuitem-${index}`} />
+      <MenuItem key={index} item={item} />
     ))}
   </>
 );

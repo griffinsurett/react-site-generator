@@ -8,30 +8,23 @@ import PropTypes from "prop-types";
 
 const Contact = ({ data }) => {
   return (
-    <Section id="contact">
+    <Section id="contact" ariaLabel="Contact Information">
       <ContentTemplate data={data} sectionButtonText="Contact Us" ifButton={false}>
-        <address className="flex flex-col space-y-4 not-italic">
+        <div className="flex flex-col">
           {data.contactInfo.map((info, index) => (
-            <div key={index} className="flex items-center space-x-3">
-              {info.icon && (
-                <Icon
-                  icon={info.icon}
-                  className="w-6 h-6 text-gray-700"
-                  ariaLabel={`${info.type} icon`}
-                  decorative={false}
-                />
-              )}
+            <div key={index} className="flex items-center mb-2">
               <Button 
                 to={info.href} 
                 variant="secondary" 
-                className="hover:underline"
-                ariaLabel={`Contact via ${info.type}`}
+                className="hover:underline flex items-center"
+                ariaLabel={`Contact via ${info.value}`}
               >
+                <Icon icon={info.icon} className="w-6 h-6 mr-2" ariaLabel={`${info.value} icon`} />
                 {info.value}
               </Button>
             </div>
           ))}
-        </address>
+        </div>
       </ContentTemplate>
     </Section>
   );
@@ -42,9 +35,8 @@ Contact.propTypes = {
     contactInfo: PropTypes.arrayOf(
       PropTypes.shape({
         icon: PropTypes.object,
-        value: PropTypes.string.isRequired,
-        href: PropTypes.string.isRequired,  // e.g., "tel:5555555555" or "/contact"
-        type: PropTypes.string, // e.g., "Phone", "Email"
+        value: PropTypes.string,
+        href: PropTypes.string,  // e.g., "tel:5555555555" or "/contact"
       })
     ).isRequired,
   }).isRequired,

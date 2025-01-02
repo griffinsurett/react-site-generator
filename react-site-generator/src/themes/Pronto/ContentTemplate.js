@@ -33,17 +33,15 @@ const ContentTemplate = ({
       sectionSlug && // Ensure sectionSlug exists
       (ifHero || sectionSlug !== currentSlug)); // Exclude current section
 
-  // Debugging logs can be removed in production
-  // console.log("Display Section Button:", displaySectionButton); 
-  // console.log("Current Slug:", currentSlug);
-  // console.log("Section Slug:", sectionSlug);  
-
   return (
     <div className={`content-template ${className}`}>
       
       {/* Title */}
       {title && (
-        <h5 className={`${titleClass} text-sm font-medium text-gray-500`}>
+        <h5
+          className={`${titleClass}`}
+          id={`section-title-${title.replace(/\s+/g, "-").toLowerCase()}`}
+        >
           {title}
         </h5>
       )}
@@ -52,11 +50,16 @@ const ContentTemplate = ({
       {heading && (
         <>
           {ifHero ? (
-            <header>
-              <h1 className={`${headingClass} text-4xl font-bold`}>{heading}</h1>
-            </header>
+            <h1
+              className={`${headingClass}`}
+              aria-labelledby={`section-title-${title.replace(/\s+/g, "-").toLowerCase()}`}
+            >
+              {heading}
+            </h1>
           ) : (
-            <h2 className={`${headingClass} text-2xl font-semibold`}>{heading}</h2>
+            <h2 className={`${headingClass}`}>
+              {heading}
+            </h2>
           )}
         </>
       )}
@@ -65,7 +68,7 @@ const ContentTemplate = ({
       {ifParagraph && showParagraphs && paragraphs.length > 0 && (
         <div>
           {paragraphs.map((paragraph, index) => (
-            <p key={index} className="mb-4 text-gray-700">
+            <p key={index} className="mb-4">
               {paragraph}
             </p>
           ))}
@@ -78,7 +81,7 @@ const ContentTemplate = ({
       {/* Section Button */}
       {displaySectionButton && (
         <div className="mt-4">
-          <Button to={sectionSlug} ariaLabel={`Navigate to ${sectionButtonText}`}>
+          <Button to={sectionSlug} ariaLabel={sectionButtonText}>
             {sectionButtonText}
           </Button>
         </div>

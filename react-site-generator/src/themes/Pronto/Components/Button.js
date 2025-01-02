@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
  * - variant: (Optional) The style variant of the button (e.g., 'primary', 'secondary'). Defaults to 'primary'.
  * - type: (Optional) The type attribute for <button> elements (e.g., 'button', 'submit').
  * - disabled: (Optional) Disables the button if true.
- * - ariaLabel: (Optional) ARIA label for better accessibility.
+ * - ariaLabel: (Optional) Accessible label for the button.
  * - ...rest: Any other props to pass to the element.
  */
 
@@ -31,18 +31,19 @@ const Button = ({
 }) => {
   // Define base styles
   const baseClasses =
-    "px-4 py-2 rounded focus:outline-none hover:underline cursor-pointer";
+    "px-4 py-2";
 
   // Combine base and variant classes
-  const buttonClasses = `${baseClasses} ${disabled ? "opacity-50 cursor-not-allowed" : "hover:opacity-80"}`;
+  const buttonClasses = `${baseClasses} ${
+    disabled ? "opacity-50 cursor-not-allowed" : ""
+  }`;
 
   if (to) {
     return (
       <Link
         to={to}
-        className={`${buttonClasses} inline-block`}
-        aria-label={ariaLabel || undefined}
-        {...(disabled ? { "aria-disabled": true, tabIndex: -1 } : {})}
+        className={`${buttonClasses} hover:underline`}
+        aria-label={ariaLabel ? ariaLabel : undefined}
         {...rest}
       >
         {children}
@@ -54,9 +55,10 @@ const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={`${buttonClasses} inline-block`}
+      className={`${buttonClasses} hover:underline`}
       disabled={disabled}
-      aria-label={ariaLabel || undefined}
+      aria-disabled={disabled}
+      aria-label={ariaLabel ? ariaLabel : undefined}
       {...rest}
     >
       {children}
@@ -71,7 +73,7 @@ Button.propTypes = {
   variant: PropTypes.oneOf(["primary", "secondary", "success", "danger"]), // Button variants
   type: PropTypes.oneOf(["button", "submit", "reset"]), // Button types
   disabled: PropTypes.bool, // Disable state
-  ariaLabel: PropTypes.string, // ARIA label for accessibility
+  ariaLabel: PropTypes.string, // Accessible label
 };
 
 export default Button;

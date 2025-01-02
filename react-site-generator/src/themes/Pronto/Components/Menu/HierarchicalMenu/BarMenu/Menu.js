@@ -4,11 +4,7 @@ import MenuList from "./MenuList";
 import PropTypes from "prop-types";
 
 const Menu = ({ menuItems }) => (
-  <ul
-    className="flex space-x-6"
-    role="menubar"
-    aria-label="Primary Navigation"
-  >
+  <ul className="flex space-x-6" role="menubar" aria-label="Main menu">
     <MenuList items={menuItems} />
   </ul>
 );

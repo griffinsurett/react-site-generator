@@ -11,19 +11,17 @@ const Testimonials = ({ data }) => {
   const items = getItemData(data);
 
   return (
-    <Section id="testimonials">
+    <Section id="testimonials" ariaLabel="Testimonials">
       <ContentTemplate data={data} sectionButtonText="View Testimonials">
         <ItemsTemplate
           items={items}
           // Define how to render each testimonial
           ItemComponent={({ quote, name, position }) => (
             <div>
-              <blockquote className="italic text-lg" cite={`#testimonial-${name}`}>
-                "{quote}"
-              </blockquote>
-              <cite id={`testimonial-${name}`} className="text-sm text-gray-700">
+              <blockquote className="italic text-lg">"{quote}"</blockquote>
+              <p>
                 <strong>{name}</strong>, {position}
-              </cite>
+              </p>
             </div>
           )}
           // Tailwind or custom classes for styling the container of items

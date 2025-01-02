@@ -3,22 +3,22 @@ import React from "react";
 import MenuList from "./MenuList";
 import PropTypes from "prop-types";
 
-const Submenu = ({ items, isVisible, parentId }) => (
+const Submenu = ({ items, isVisible }) => (
   <ul
     className={`absolute left-0 top-full bg-white border border-gray-200 shadow-lg rounded-md transition-all duration-300 ${
       isVisible ? "block opacity-100" : "hidden opacity-0"
     }`}
     role="menu"
-    aria-labelledby={parentId}
+    aria-hidden={!isVisible}
+    aria-label="Submenu"
   >
     <MenuList items={items} />
   </ul>
 );
 
 Submenu.propTypes = {
-  items: PropTypes.array.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
   isVisible: PropTypes.bool.isRequired,
-  parentId: PropTypes.string.isRequired, // ID of the parent menu item for ARIA association
 };
 
 export default Submenu;

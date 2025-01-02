@@ -39,7 +39,11 @@ const ItemsTemplate = ({
   }
 
   return (
-    <div className={`items-template-container ${layout} ${containerClass}`} {...rest}>
+    <div
+      className={`items-template-container ${layout} ${containerClass}`}
+      role="list"
+      {...rest}
+    >
       {items.map((item, index) => (
         <ItemComponent
           key={index}

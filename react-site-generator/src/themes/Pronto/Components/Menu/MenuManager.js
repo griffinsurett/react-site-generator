@@ -5,7 +5,10 @@ export default class MenuManager {
     this.menus = this.initializeMenus();
   }
 
-  // Initialize menus from CMS queries
+  /**
+   * Initializes menus from CMS queries.
+   * @returns {Object} A map of menu names to their respective menu items.
+   */
   initializeMenus() {
     const { queries } = this.siteSettings;
     if (!queries || !Array.isArray(queries)) {
@@ -20,41 +23,47 @@ export default class MenuManager {
     }, {});
   }
 
-  // Process menu items recursively to handle hierarchical structures
-  processMenuItems(items, parentId = "") {
-    return items.map((item, index) => {
-      const uniqueId = `${parentId}menu-item-${index}`;
-      return {
-        ...item,
-        id: item.id || uniqueId, // Assign unique ID if not present
-        items: item.items ? this.processMenuItems(item.items, uniqueId) : [],
-      };
-    });
+  /**
+   * Recursively processes menu items to handle hierarchical structures.
+   * @param {Array} items - The menu items to process.
+   * @returns {Array} The processed menu items.
+   */
+  processMenuItems(items) {
+    return items.map((item) => ({
+      ...item,
+      items: item.items ? this.processMenuItems(item.items) : [],
+    }));
   }
 
-  // Get a menu by name
+  /**
+   * Retrieves a menu by its name.
+   * @param {string} menuName - The name of the menu to retrieve.
+   * @returns {Array} The menu items.
+   */
   getMenu(menuName) {
     return this.menus[menuName] || [];
   }
 
-  // Apply theme-specific rules for hierarchical menus
+  /**
+   * Retrieves a hierarchical menu, marking items that have submenus.
+   * @param {string} menuName - The name of the menu to retrieve.
+   * @returns {Array} The hierarchical menu items.
+   */
   getHierarchicalMenu(menuName) {
     const menu = this.getMenu(menuName);
     return menu.map((item) => ({
       ...item,
       isParent: item.items && item.items.length > 0,
-      ariaLabel: item.ariaLabel || item.title, // Ensure aria-label is present
     }));
   }
 
-  // Apply rules for flat menus (e.g., social media)
+  /**
+   * Retrieves a flat menu, excluding items that have submenus.
+   * @param {string} menuName - The name of the menu to retrieve.
+   * @returns {Array} The flat menu items.
+   */
   getFlatMenu(menuName) {
     const menu = this.getMenu(menuName);
-    return menu
-      .filter((item) => !item.items || item.items.length === 0)
-      .map((item) => ({
-        ...item,
-        ariaLabel: item.ariaLabel || item.title, // Ensure aria-label is present
-      }));
+    return menu.filter((item) => !item.items || item.items.length === 0);
   }
 }

@@ -2,7 +2,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
 const Footer = ({ menuManager, siteSettings, isSticky }) => {
   const footerMenu = menuManager.getFlatMenu("Footer");
@@ -16,39 +15,35 @@ const Footer = ({ menuManager, siteSettings, isSticky }) => {
       style={{
         zIndex: isSticky ? 1000 : "auto", // Apply zIndex only if sticky
       }}
-      role="contentinfo"
+      aria-label="Footer"
     >
-      {/* Footer Navigation */}
-      <nav aria-label="Footer Navigation" className="mb-2">
-        <ul className="flex flex-wrap justify-center space-x-4">
+      {/* Footer Menu */}
+      <nav aria-label="Footer menu">
+        <ul className="flex flex-wrap mb-2" role="menubar">
           {footerMenu.map((item, index) => (
-            <li key={index}>
-              {item.slug ? (
-                <Link to={item.slug} className="hover:underline">
-                  {item.title}
-                </Link>
-              ) : (
-                <a href={item.link} className="hover:underline">
-                  {item.title}
-                </a>
-              )}
+            <li key={index} className="mx-2" role="none">
+              <a href={item.link || item.slug} className="hover:underline" role="menuitem">
+                {item.title}
+              </a>
             </li>
           ))}
         </ul>
       </nav>
 
-      {/* Social Media Links */}
-      <nav aria-label="Social Media Links" className="mb-2">
-        <ul className="flex space-x-4">
+      {/* Social Menu */}
+      <nav aria-label="Social media links">
+        <ul className="flex" role="menubar">
           {socialMenu.map((item, index) => (
-            <li key={index}>
+            <li key={index} role="none">
               <a
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={item.title} // Descriptive aria-label
+                className="mx-2"
+                aria-label={`Visit our ${item.title} page`}
+                role="menuitem"
               >
-                <FontAwesomeIcon icon={item.icon} size="lg" />
+                <FontAwesomeIcon icon={item.icon} size="lg" aria-hidden="true" />
               </a>
             </li>
           ))}
@@ -56,7 +51,9 @@ const Footer = ({ menuManager, siteSettings, isSticky }) => {
       </nav>
 
       {/* Footer Text */}
-      <p className="text-sm">{siteSettings.Copyright}</p>
+      <p className="text-sm" role="contentinfo">
+        {siteSettings.Copyright}
+      </p>
     </footer>
   );
 };

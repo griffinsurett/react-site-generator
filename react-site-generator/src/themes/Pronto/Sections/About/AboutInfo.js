@@ -11,7 +11,7 @@ const AboutInfo = ({ data }) => {
   const items = getItemData(data);
 
   return (
-    <Section id="about-info">
+    <Section id="about-info" ariaLabel="About Information">
       <ContentTemplate data={data} sectionButtonText="Learn More">
         <ItemsTemplate
           items={items}

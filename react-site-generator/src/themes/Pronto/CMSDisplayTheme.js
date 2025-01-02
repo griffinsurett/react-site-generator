@@ -38,7 +38,11 @@ const CMSDisplayTheme = () => {
   const { loading, pageStructure, siteSettings, pageId } = useCMSContext();
 
   if (loading || !pageStructure) {
-    return <p>Loading...</p>;
+    return (
+      <div role="status" aria-live="polite" className="flex items-center justify-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   // Build a menu manager from siteSettings (which has queries)
@@ -57,7 +61,7 @@ const CMSDisplayTheme = () => {
       )}
 
       {/* Replace <div> with <main> for semantic HTML */}
-      <main className="flex-grow" role="main" aria-labelledby="page-title">
+      <main className="flex-grow">
         {sections
           .filter(({ key }) => key !== "hero") // Exclude hero
           .map(({ key, data }) => {
