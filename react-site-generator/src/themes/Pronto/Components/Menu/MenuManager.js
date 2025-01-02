@@ -21,12 +21,15 @@ export default class MenuManager {
   }
 
   // Process menu items recursively to handle hierarchical structures
-  processMenuItems(items) {
-    return items.map((item, index) => ({
-      ...item,
-      id: item.id || `menu-item-${index}`, // Assign unique ID if not present
-      items: item.items ? this.processMenuItems(item.items) : [],
-    }));
+  processMenuItems(items, parentId = "") {
+    return items.map((item, index) => {
+      const uniqueId = `${parentId}menu-item-${index}`;
+      return {
+        ...item,
+        id: item.id || uniqueId, // Assign unique ID if not present
+        items: item.items ? this.processMenuItems(item.items, uniqueId) : [],
+      };
+    });
   }
 
   // Get a menu by name
