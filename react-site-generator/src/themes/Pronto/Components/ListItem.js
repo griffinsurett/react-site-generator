@@ -1,4 +1,4 @@
-// themes/Pronto/Components/ListItem.js
+// src/themes/Pronto/Components/ListItem.js
 import React from "react";
 import PropTypes from "prop-types";
 import Image from "./Image"; // Import the Image component
@@ -22,6 +22,7 @@ import Button from "./Button"; // Import the Button component
  * - descriptionClass: Additional CSS classes for the description.
  * - mediaClass: Additional CSS classes for the icon/image.
  * - buttonClass: Additional CSS classes for the button.
+ * - ariaLabel: Accessible label for the button, if needed.
  */
 const ListItem = ({
   icon,
@@ -35,6 +36,7 @@ const ListItem = ({
   descriptionClass,
   mediaClass,
   buttonClass,
+  ariaLabel,
 }) => {
   return (
     <div className="flex flex-col items-start mb-6">
@@ -42,14 +44,15 @@ const ListItem = ({
       {image ? (
         <Image
           src={image}
-          alt={title}
+          alt={title || "Related image"}
           className={`w-24 h-24 ${mediaClass}`}
         />
       ) : (
         icon && (
           <Icon
             icon={icon}
-            className={`text-2xl${mediaClass}`}
+            className={`text-2xl ${mediaClass}`}
+            ariaLabel={title} // Provide ariaLabel if the icon conveys meaning
           />
         )
       )}
@@ -66,7 +69,11 @@ const ListItem = ({
 
       {/* Button */}
       {hasPage && slug && (
-        <Button to={slug} className={`${buttonClass} hover:underline`}>
+        <Button
+          to={slug}
+          className={`${buttonClass} hover:underline`}
+          ariaLabel={ariaLabel ? ariaLabel : `See details about ${title}`}
+        >
           {`See ${title || "Item"} details`}
         </Button>
       )}
@@ -86,6 +93,7 @@ ListItem.propTypes = {
   descriptionClass: PropTypes.string,
   mediaClass: PropTypes.string, // Class for icon/image
   buttonClass: PropTypes.string,
+  ariaLabel: PropTypes.string, // Accessible label for the button
 };
 
 ListItem.defaultProps = {
@@ -96,6 +104,7 @@ ListItem.defaultProps = {
   descriptionClass: "text-gray-600",
   mediaClass: "",
   buttonClass: "mt-2",
+  ariaLabel: "",
 };
 
 export default ListItem;

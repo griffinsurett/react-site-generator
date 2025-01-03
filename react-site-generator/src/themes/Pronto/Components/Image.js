@@ -1,4 +1,4 @@
-// themes/Pronto/Components/Image.js
+// src/themes/Pronto/Components/Image.js
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -13,10 +13,11 @@ import PropTypes from "prop-types";
  * - className: Additional CSS classes for customization.
  * - width: Width of the image.
  * - height: Height of the image.
+ * - role: (Optional) ARIA role for the image.
  * - ...rest: Any other props to pass to the <img> tag.
  */
 
-const Image = ({ src, alt, className = "", width, height, ...rest }) => {
+const Image = ({ src, alt, className = "", width, height, role, ...rest }) => {
   return (
     <img
       src={src}
@@ -24,6 +25,7 @@ const Image = ({ src, alt, className = "", width, height, ...rest }) => {
       className={`object-cover ${className}`}
       width={width}
       height={height}
+      role={role}
       {...rest}
     />
   );
@@ -31,10 +33,11 @@ const Image = ({ src, alt, className = "", width, height, ...rest }) => {
 
 Image.propTypes = {
   src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired, // Enforce alt text for accessibility
   className: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  role: PropTypes.string, // Optional ARIA role
 };
 
 export default Image;

@@ -2,7 +2,6 @@
 import React from "react";
 import Section from "../../Components/Section";
 import ContentTemplate from "../../ContentTemplate";
-import Button from "../../Components/Button"; // Import Button if needed
 import PropTypes from "prop-types";
 
 const GenericHero = ({ title, description, buttonText, buttonLink }) => {

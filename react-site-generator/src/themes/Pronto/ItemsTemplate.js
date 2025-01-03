@@ -1,4 +1,4 @@
-// themes/Pronto/Components/ItemsTemplate.js
+// src/themes/Pronto/Components/ItemsTemplate.js
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -28,11 +28,11 @@ const ItemsTemplate = ({
 
   if (items.length === 0) {
     return emptyComponent ? (
-      <div className={containerClass} {...rest}>
+      <div className={containerClass} {...rest} role="alert">
         {emptyComponent}
       </div>
     ) : (
-      <div className={containerClass} {...rest}>
+      <div className={containerClass} {...rest} role="alert">
         <p>No items available at this time.</p>
       </div>
     );

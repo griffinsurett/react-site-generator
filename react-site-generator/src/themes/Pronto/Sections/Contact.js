@@ -6,20 +6,30 @@ import Icon from "../Components/Icon";  // If you want to display an icon
 import Button from "../Components/Button"; // We'll use Button in place of <a>
 import PropTypes from "prop-types";
 
+/**
+ * Contact Section
+ *
+ * Renders contact information with accessible links and icons.
+ *
+ * Props:
+ * - data: Object containing contact information data.
+ */
+
 const Contact = ({ data }) => {
   return (
     <Section id="contact">
       <ContentTemplate data={data} sectionButtonText="Contact Us" ifButton={false}>
-        <div className="flex flex-col">
+        <div className="flex flex-col space-y-4">
           {data.contactInfo.map((info, index) => (
             <div key={index} className="flex items-center">
               <Button 
-                to={info.href} 
+                href={info.href} 
                 variant="secondary" 
-                className="hover:underline"
+                className="flex items-center space-x-2 hover:underline"
+                ariaLabel={`Contact via ${info.value}`}
               >
-              {<Icon icon={info.icon} className="w-6 h-6" />}
-                {info.value}
+                {info.icon && <Icon icon={info.icon} className="w-6 h-6" ariaLabel="" />}
+                <span>{info.value}</span>
               </Button>
             </div>
           ))}
@@ -35,7 +45,7 @@ Contact.propTypes = {
       PropTypes.shape({
         icon: PropTypes.object,
         value: PropTypes.string,
-        href: PropTypes.string,  // e.g., "tel:5555555555" or "/contact"
+        href: PropTypes.string,  // e.g., "tel:5555555555" or "mailto:email@example.com"
       })
     ).isRequired,
   }).isRequired,

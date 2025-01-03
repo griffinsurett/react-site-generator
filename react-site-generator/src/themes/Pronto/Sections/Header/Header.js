@@ -5,6 +5,17 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Image from "../../Components/Image";
 
+/**
+ * Header Component
+ *
+ * Renders the site header with logo and navigation menu.
+ *
+ * Props:
+ * - siteSettings: Object containing siteLogo and siteTitle.
+ * - menuManager: Object to manage menus.
+ * - isSticky: Boolean to determine if the header is sticky.
+ */
+
 const Header = ({ siteSettings, menuManager, isSticky }) => {
   return (
     <header
@@ -18,19 +29,19 @@ const Header = ({ siteSettings, menuManager, isSticky }) => {
       <div className="flex justify-between items-center">
         {/* Left section */}
         <div className="flex items-center">
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center" aria-label={`Navigate to ${siteSettings.siteTitle} homepage`}>
             <Image
               src={siteSettings.siteLogo}
-              alt={siteSettings.siteTitle}
+              alt={`${siteSettings.siteTitle} Logo`}
               className="w-16 mr-3"
             />
-            <h1 className="text-xl font-semibold">{siteSettings.siteTitle}</h1>
+            <span className="text-xl font-semibold">{siteSettings.siteTitle}</span>
           </Link>
         </div>
         {/* Right section */}
-        <div className="flex items-center">
+        <nav aria-label="Primary Navigation">
           <NavMenu menuManager={menuManager} />
-        </div>
+        </nav>
       </div>
     </header>
   );

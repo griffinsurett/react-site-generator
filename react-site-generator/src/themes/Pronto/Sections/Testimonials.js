@@ -1,10 +1,19 @@
-// src/themes/Pronto/Sections/Testimonials/Testimonials.js
+// src/themes/Pronto/Sections/Testimonials.js
 import React from "react";
 import Section from "../Components/Section";
 import ContentTemplate from "../ContentTemplate";
-import ItemsTemplate from "../ItemsTemplate"; // <-- Import ItemsTemplate
+import ItemsTemplate from "../ItemsTemplate"; // Import ItemsTemplate
 import PropTypes from "prop-types";
 import { getItemData } from "../GetItems";
+
+/**
+ * Testimonials Section
+ *
+ * Renders a list of client testimonials with quotes and attribution.
+ *
+ * Props:
+ * - data: Object containing testimonials data.
+ */
 
 const Testimonials = ({ data }) => {
   // Safely retrieve the items array
@@ -17,8 +26,10 @@ const Testimonials = ({ data }) => {
           items={items}
           // Define how to render each testimonial
           ItemComponent={({ quote, name, position }) => (
-            <div>
-              <blockquote className="italic text-lg">"{quote}"</blockquote>
+            <div className="testimonial">
+              <blockquote className="italic text-lg" cite={`https://${name.replace(/\s+/g, '').toLowerCase()}.com`}>
+                "{quote}"
+              </blockquote>
               <p>
                 <strong>{name}</strong>, {position}
               </p>

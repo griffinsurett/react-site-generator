@@ -1,8 +1,32 @@
-// ContentTemplate.js
+// src/themes/Pronto/ContentTemplate.js
 import React from "react";
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
 import Button from "./Components/Button";
+
+/**
+ * ContentTemplate Component
+ *
+ * Acts as a layout template for content sections.
+ * Ensures consistent heading hierarchy and accessible buttons.
+ *
+ * Props:
+ * - data: Data object containing section information.
+ * - title: Title text for the section.
+ * - heading: Heading text for the section.
+ * - paragraphs: Array of paragraph texts.
+ * - showParagraphs: Whether to display paragraphs.
+ * - sectionSlug: Link slug for the section button.
+ * - hasPage: Whether the section has an associated page.
+ * - sectionButtonText: Text for the section button.
+ * - className: Additional CSS classes for customization.
+ * - children: Child components to render within the section.
+ * - ifParagraph: Whether to display paragraphs.
+ * - ifButton: Whether to display the section button.
+ * - ifHero: Whether the section is a hero section (uses h1).
+ * - titleClass: Additional CSS classes for the title.
+ * - headingClass: Additional CSS classes for the heading.
+ */
 
 const ContentTemplate = ({
   data = {}, // Data object for default values
@@ -27,11 +51,11 @@ const ContentTemplate = ({
 
   // Determine whether to display the section button
   const displaySectionButton =
-  ifHero || // Check if section is a hero
-  (ifButton && 
-   hasPage !== false && 
-   sectionSlug && // Ensure sectionSlug exists
-   (ifHero || sectionSlug !== currentSlug)); // Exclude current section
+    ifHero || // Check if section is a hero
+    (ifButton &&
+      hasPage !== false &&
+      sectionSlug && // Ensure sectionSlug exists
+      (ifHero || sectionSlug !== currentSlug)); // Exclude current section
 
   // console.log(data);
 
@@ -40,9 +64,9 @@ const ContentTemplate = ({
       
       {/* Title */}
       {title && (
-        <h5 className={`${titleClass}`}>
+        <h2 className={`${titleClass}`}>
           {title}
-        </h5>
+        </h2>
       )}
 
       {/* Heading */}
@@ -53,9 +77,9 @@ const ContentTemplate = ({
               {heading}
             </h1>
           ) : (
-            <h2 className={`${headingClass}`}>
+            <h3 className={`${headingClass}`}>
               {heading}
-            </h2>
+            </h3>
           )}
         </>
       )}

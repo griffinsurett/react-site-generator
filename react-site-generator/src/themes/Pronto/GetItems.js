@@ -1,4 +1,4 @@
-// GetItems.js
+// src/themes/Pronto/GetItems.js
 
 /**
  * Safely retrieves an array of items from a given data object,

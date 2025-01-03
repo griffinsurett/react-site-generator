@@ -7,6 +7,15 @@ import ListItem from "../Components/ListItem"; // Import ListItem
 import PropTypes from "prop-types";
 import { getItemData } from "../GetItems";
 
+/**
+ * Projects Section
+ *
+ * Renders a list of projects with links to project details or external URLs.
+ *
+ * Props:
+ * - data: Object containing project data.
+ */
+
 const Projects = ({ data }) => {
   const items = getItemData(data);
 
@@ -22,8 +31,7 @@ const Projects = ({ data }) => {
               title={title}
               description={description}
               hasPage={hasPage}
-              slug={slug}
-              link={link} // Pass external link if available
+              slug={link || slug} // Use link if provided, else slug
               linkText={`View ${title || "Project"}`}
               titleClass="text-xl font-semibold"
             />

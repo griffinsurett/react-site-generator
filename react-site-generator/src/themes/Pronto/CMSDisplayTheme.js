@@ -34,14 +34,14 @@ const sectionComponents = {
 };
 
 const CMSDisplayTheme = () => {
-  // Instead of using a prop-based approach, we read from CMSContext
+  // Read from CMSContext
   const { loading, pageStructure, siteSettings, pageId } = useCMSContext();
 
   if (loading || !pageStructure) {
     return <p role="status" aria-live="polite">Loading...</p>;
   }
 
-  // Build a menu manager from siteSettings (which has queries)
+  // Initialize MenuManager
   const menuManager = new MenuManager(siteSettings);
 
   const { title, description, sections } = pageStructure;
@@ -56,7 +56,7 @@ const CMSDisplayTheme = () => {
         <GenericHero title={title} description={description} />
       )}
 
-      {/* Replace <div> with <main> for semantic HTML */}
+      {/* Main content area */}
       <main className="flex-grow" role="main">
         {sections
           .filter(({ key }) => key !== "hero") // Exclude hero
