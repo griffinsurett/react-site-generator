@@ -11,10 +11,9 @@ const Services = ({ data }) => {
   const items = getItemData(data);
 
   return (
-    <Section id="services" ariaLabel="Our Services">
+    <Section id="services">
       <ContentTemplate
         data={data}
-        sectionButtonText="View All Services"
         sectionSlug={data.slug}
       >
         <ItemsTemplate

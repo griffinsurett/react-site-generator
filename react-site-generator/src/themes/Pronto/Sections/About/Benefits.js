@@ -11,8 +11,8 @@ const Benefits = ({ data }) => {
   const items = getItemData(data);
 
   return (
-    <Section id="benefits" ariaLabel="Our Benefits">
-      <ContentTemplate data={data} sectionButtonText="View All Benefits">
+    <Section id="benefits">
+      <ContentTemplate data={data}>
         <ItemsTemplate
           items={items}
           ItemComponent={({ icon, title, description, hasPage, slug }) => (
@@ -21,7 +21,6 @@ const Benefits = ({ data }) => {
               title={title}
               description={description}
               hasPage={hasPage}
-              slug={slug}
               linkText={`See ${title || "Benefit"} details`}
               titleClass="text-xl font-semibold"
             />

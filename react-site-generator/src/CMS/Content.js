@@ -202,6 +202,7 @@ const collections = [
     collection: "services",
     heading: "What We Do",
     title: "Services",
+    description: "Explore our wide range of services designed to meet your needs.",
     featuredImage: TestImage,
     hasPage: true,
     slug: "/services",
@@ -282,6 +283,7 @@ const collections = [
     collection: "projects",
     heading: "Our Projects",
     title: "Projects",
+    description: "Explore our recent projects and discover the quality of our work.",
     featuredImage: TestImage,
     hasPage: true,
     slug: "/projects",
@@ -316,6 +318,8 @@ const collections = [
     collection: "testimonials",
     heading: "What Our Clients Say",
     title: "Testimonials",
+    description:
+      "Read what our clients have to say about our construction and demolition services.",
     hasPage: true,
     featuredImage: TestImage,
     addToQuery: [{ name: "Primary", parentQueryItem: "/about-us" }],
@@ -345,6 +349,8 @@ const collections = [
     collection: "faq",
     heading: "Frequently Asked Questions",
     title: "FAQ",
+    description:
+      "Discover answers to common questions about Pronto Construction and Demolition.",
     hasPage: true,
     featuredImage: TestImage,
     addToQuery: [{ name: "Primary", parentQueryItem: "/about-us" }],

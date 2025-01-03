@@ -1,7 +1,6 @@
 // NavMenu.js
 import React from "react";
 import HierarchicalMenu from "../../Components/Menu/HierarchicalMenu/HierarchicalMenu";
-import PropTypes from "prop-types";
 
 const NavMenu = ({ menuManager }) => {
   const navMenuItems = menuManager?.getHierarchicalMenu("Primary") || [];
@@ -12,10 +11,6 @@ const NavMenu = ({ menuManager }) => {
       breakpoint={1068}
     />
   );
-};
-
-NavMenu.propTypes = {
-  menuManager: PropTypes.object.isRequired,
 };
 
 export default NavMenu;

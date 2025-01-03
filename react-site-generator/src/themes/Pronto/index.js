@@ -4,7 +4,7 @@ import CMSDisplayTheme from "./CMSDisplayTheme";
 
 const App = () => {
   return (
-    <div className="App flex flex-col min-h-screen" role="document">
+    <div className="App flex flex-col min-h-screen">
       <CMSDisplayTheme pageId="home" />
     </div>
   );

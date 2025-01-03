@@ -14,24 +14,23 @@ const Header = ({ siteSettings, menuManager, isSticky }) => {
       style={{
         zIndex: isSticky ? 1000 : "auto", // Apply zIndex only if sticky
       }}
-      aria-label="Site Header"
     >
       <div className="flex justify-between items-center">
         {/* Left section */}
         <div className="flex items-center">
-          <Link to="/" className="flex items-center" aria-label={`${siteSettings.siteTitle} homepage`}>
+          <Link to="/" className="flex items-center">
             <Image
               src={siteSettings.siteLogo}
-              alt={`${siteSettings.siteTitle} logo`}
+              alt={siteSettings.siteTitle}
               className="w-16 mr-3"
             />
             <h1 className="text-xl font-semibold">{siteSettings.siteTitle}</h1>
           </Link>
         </div>
         {/* Right section */}
-        <nav className="flex items-center" aria-label="Primary navigation">
+        <div className="flex items-center">
           <NavMenu menuManager={menuManager} />
-        </nav>
+        </div>
       </div>
     </header>
   );

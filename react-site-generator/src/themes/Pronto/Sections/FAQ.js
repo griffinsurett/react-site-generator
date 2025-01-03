@@ -22,7 +22,7 @@ const FAQ = ({ data }) => {
   };
 
   return (
-    <Section id="faq" ariaLabel="Frequently Asked Questions">
+    <Section id="faq">
       <ContentTemplate data={data} sectionButtonText="View FAQ" ifButton={false}>
         <ItemsTemplate
           items={items}

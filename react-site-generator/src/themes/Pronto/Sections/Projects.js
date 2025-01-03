@@ -11,8 +11,8 @@ const Projects = ({ data }) => {
   const items = getItemData(data);
 
   return (
-    <Section id="projects" ariaLabel="Our Projects">
-      <ContentTemplate data={data} sectionButtonText="View All Projects">
+    <Section id="projects">
+      <ContentTemplate data={data}>
         <ItemsTemplate
           items={items}
           ItemComponent={({ icon, featuredImage, title, description, hasPage, slug, link }) => (

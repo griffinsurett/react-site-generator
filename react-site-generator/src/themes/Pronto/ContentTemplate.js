@@ -12,7 +12,7 @@ const ContentTemplate = ({
   showParagraphs = true,
   sectionSlug = data.slug,
   hasPage = data.hasPage, // Automatically fetch `hasPage` from `data`
-  sectionButtonText = "Learn More",
+  sectionButtonText = `View All ${data.title}`,
   className = "",
   children,
   // New Props
@@ -27,21 +27,20 @@ const ContentTemplate = ({
 
   // Determine whether to display the section button
   const displaySectionButton =
-    ifHero || // Check if section is a hero
-    (ifButton &&
-      hasPage !== false &&
-      sectionSlug && // Ensure sectionSlug exists
-      (ifHero || sectionSlug !== currentSlug)); // Exclude current section
+  ifHero || // Check if section is a hero
+  (ifButton && 
+   hasPage !== false && 
+   sectionSlug && // Ensure sectionSlug exists
+   (ifHero || sectionSlug !== currentSlug)); // Exclude current section
+
+  // console.log(data);
 
   return (
     <div className={`content-template ${className}`}>
       
       {/* Title */}
       {title && (
-        <h5
-          className={`${titleClass}`}
-          id={`section-title-${title.replace(/\s+/g, "-").toLowerCase()}`}
-        >
+        <h5 className={`${titleClass}`}>
           {title}
         </h5>
       )}
@@ -50,10 +49,7 @@ const ContentTemplate = ({
       {heading && (
         <>
           {ifHero ? (
-            <h1
-              className={`${headingClass}`}
-              aria-labelledby={`section-title-${title.replace(/\s+/g, "-").toLowerCase()}`}
-            >
+            <h1 className={`${headingClass}`}>
               {heading}
             </h1>
           ) : (
@@ -81,7 +77,7 @@ const ContentTemplate = ({
       {/* Section Button */}
       {displaySectionButton && (
         <div className="mt-4">
-          <Button to={sectionSlug} ariaLabel={sectionButtonText}>
+          <Button to={sectionSlug}>
             {sectionButtonText}
           </Button>
         </div>

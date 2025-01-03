@@ -7,8 +7,8 @@ import PropTypes from "prop-types";
 const About = ({ data }) => {
 
   return (
-    <Section id="about" ariaLabel="About Us">
-      <ContentTemplate data={data} sectionButtonText="Learn More About Us">
+    <Section id="about">
+      <ContentTemplate data={data} sectionButtonText={`Learn More ${data.title}`}>
       </ContentTemplate>
     </Section>
   );

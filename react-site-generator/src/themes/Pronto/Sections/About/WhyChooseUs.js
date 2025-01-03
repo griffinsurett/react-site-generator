@@ -11,8 +11,8 @@ const WhyChooseUs = ({ data }) => {
   const items = getItemData(data);
 
   return (
-    <Section id="why-choose-us" ariaLabel="Why Choose Us">
-      <ContentTemplate data={data} sectionButtonText="Learn More">
+    <Section id="why-choose-us">
+      <ContentTemplate data={data}>
         <ItemsTemplate
           items={items}
           ItemComponent={({ icon, title, description, hasPage, slug }) => (

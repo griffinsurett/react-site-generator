@@ -30,6 +30,7 @@ const MenuItem = ({ item }) => {
       <div className="flex items-center space-x-2">
         <Link
           to={item.slug}
+          className="text-gray-800 hover:text-blue-600 transition-colors duration-200"
           onClick={handleClick} // Close submenu on click
         >
           {item.title}

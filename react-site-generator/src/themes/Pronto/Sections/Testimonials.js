@@ -11,8 +11,8 @@ const Testimonials = ({ data }) => {
   const items = getItemData(data);
 
   return (
-    <Section id="testimonials" ariaLabel="Testimonials">
-      <ContentTemplate data={data} sectionButtonText="View Testimonials">
+    <Section id="testimonials">
+      <ContentTemplate data={data}>
         <ItemsTemplate
           items={items}
           // Define how to render each testimonial

@@ -3,15 +3,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const AccordionItem = ({ title, description, isActive, onClick }) => {
-  const contentId = `accordion-content-${title.replace(/\s+/g, "-").toLowerCase()}`;
-
   return (
     <div className="accordion-item">
       <button
         onClick={onClick}
         className="flex items-center justify-between w-full text-left"
-        aria-expanded={isActive}
-        aria-controls={contentId}
       >
         <span className="font-semibold">{title || "Untitled Question"}</span>
         <svg
@@ -21,7 +17,6 @@ const AccordionItem = ({ title, description, isActive, onClick }) => {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
-          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -33,7 +28,7 @@ const AccordionItem = ({ title, description, isActive, onClick }) => {
       </button>
 
       {isActive && (
-        <div id={contentId} role="region" aria-labelledby={`accordion-button-${title.replace(/\s+/g, "-").toLowerCase()}`} className="mt-2">
+        <div className="mt-2">
           <p>{description}</p>
         </div>
       )}

@@ -10,6 +10,10 @@ import Pronto from "../themes/Pronto/CMSDisplayTheme";
 
 /**
  * CMSContext
+ * This context replaces:
+ * - useThemeContent (ThemeContentBridge.js)
+ * - PickTheme.js
+ *
  * It holds:
  *   - loading state
  *   - pageStructure (sections, etc.)

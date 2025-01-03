@@ -11,7 +11,7 @@ const CTASection = ({ data }) => {
   const items = getItemData(data);
 
   return (
-    <Section id="cta" ariaLabel="Call to Action">
+    <Section id="cta">
       <ContentTemplate data={data} sectionButtonText="Get Started">
         <ItemsTemplate
           items={items}

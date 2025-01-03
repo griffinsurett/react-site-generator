@@ -10,50 +10,40 @@ const Footer = ({ menuManager, siteSettings, isSticky }) => {
   return (
     <footer
       className={`py-4 px-5 ${
-        isSticky ? "sticky bottom-0" : "relative"
+        isSticky = false ? "sticky bottom-0" : "relative"
       } flex flex-col justify-center items-center text-center`}
       style={{
-        zIndex: isSticky ? 1000 : "auto", // Apply zIndex only if sticky
+        zIndex: 1000, // Apply zIndex only if sticky
       }}
-      aria-label="Footer"
     >
       {/* Footer Menu */}
-      <nav aria-label="Footer menu">
-        <ul className="flex flex-wrap mb-2" role="menubar">
-          {footerMenu.map((item, index) => (
-            <li key={index} className="mx-2" role="none">
-              <a href={item.link || item.slug} className="hover:underline" role="menuitem">
-                {item.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <ul className="flex flex-wrap mb-2">
+        {footerMenu.map((item, index) => (
+          <li key={index} className="mx-2">
+            <a href={item.link || item.slug} className="hover:underline">
+              {item.title}
+            </a>
+          </li>
+        ))}
+      </ul>
 
       {/* Social Menu */}
-      <nav aria-label="Social media links">
-        <ul className="flex" role="menubar">
-          {socialMenu.map((item, index) => (
-            <li key={index} role="none">
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mx-2"
-                aria-label={`Visit our ${item.title} page`}
-                role="menuitem"
-              >
-                <FontAwesomeIcon icon={item.icon} size="lg" aria-hidden="true" />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <ul className="flex">
+        {socialMenu.map((item, index) => (
+          <li key={index}>
+            <a
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={item.icon} size="lg" />
+            </a>
+          </li>
+        ))}
+      </ul>
 
       {/* Footer Text */}
-      <p className="text-sm" role="contentinfo">
-        {siteSettings.Copyright}
-      </p>
+      <p className="text-sm">{siteSettings.Copyright}</p>
     </footer>
   );
 };

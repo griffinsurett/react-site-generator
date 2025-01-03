@@ -11,8 +11,8 @@ const ProcessSection = ({ data }) => {
   const items = getItemData(data);
 
   return (
-    <Section id="process" ariaLabel="Our Process">
-      <ContentTemplate data={data} sectionButtonText="Learn About Our Process">
+    <Section id="process">
+      <ContentTemplate data={data}>
         <ItemsTemplate
           items={items}
           ItemComponent={({ icon, featuredImage, title, description, hasPage, slug }) => (

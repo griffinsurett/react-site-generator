@@ -49,8 +49,7 @@ const ListItem = ({
         icon && (
           <Icon
             icon={icon}
-            className={`text-2xl ${mediaClass}`} // Added space before mediaClass
-            ariaLabel={title ? `${title} icon` : undefined} // Provide accessible label if title exists
+            className={`text-2xl${mediaClass}`}
           />
         )
       )}

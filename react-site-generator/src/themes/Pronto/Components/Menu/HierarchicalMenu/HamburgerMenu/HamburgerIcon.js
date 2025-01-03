@@ -1,14 +1,8 @@
-// HamburgerIcon.js
+// Hamburger.js
 import React from "react";
-import PropTypes from "prop-types";
 
-const HamburgerIcon = ({ isMenuOpen, toggleMenu }) => (
-  <button
-    className="flex flex-col justify-between w-6 h-6 cursor-pointer bg-gray-800 focus:outline-none"
-    onClick={toggleMenu}
-    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-    aria-expanded={isMenuOpen}
-  >
+const Hamburger = ({ isMenuOpen, toggleMenu }) => (
+  <div className="flex flex-col justify-between w-6 h-6 cursor-pointer" onClick={toggleMenu}>
     <span
       className={`block h-0.5 bg-gray-800 transform transition-transform duration-300 ${
         isMenuOpen ? "rotate-45 translate-y-1.5" : ""
@@ -24,12 +18,7 @@ const HamburgerIcon = ({ isMenuOpen, toggleMenu }) => (
         isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
       }`}
     ></span>
-  </button>
+  </div>
 );
 
-HamburgerIcon.propTypes = {
-  isMenuOpen: PropTypes.bool.isRequired,
-  toggleMenu: PropTypes.func.isRequired,
-};
-
-export default HamburgerIcon;
+export default Hamburger;

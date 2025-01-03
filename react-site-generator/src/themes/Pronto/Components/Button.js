@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
  * - variant: (Optional) The style variant of the button (e.g., 'primary', 'secondary'). Defaults to 'primary'.
  * - type: (Optional) The type attribute for <button> elements (e.g., 'button', 'submit').
  * - disabled: (Optional) Disables the button if true.
- * - ariaLabel: (Optional) Accessible label for the button.
  * - ...rest: Any other props to pass to the element.
  */
 
@@ -26,7 +25,6 @@ const Button = ({
   children,
   type = "button",
   disabled = false,
-  ariaLabel,
   ...rest
 }) => {
   // Define base styles
@@ -40,12 +38,7 @@ const Button = ({
 
   if (to) {
     return (
-      <Link
-        to={to}
-        className={`${buttonClasses} hover:underline`}
-        aria-label={ariaLabel ? ariaLabel : undefined}
-        {...rest}
-      >
+      <Link to={to} className={`${buttonClasses} hover:underline`} {...rest}>
         {children}
       </Link>
     );
@@ -57,8 +50,6 @@ const Button = ({
       onClick={onClick}
       className={`${buttonClasses} hover:underline`}
       disabled={disabled}
-      aria-disabled={disabled}
-      aria-label={ariaLabel ? ariaLabel : undefined}
       {...rest}
     >
       {children}
@@ -73,7 +64,6 @@ Button.propTypes = {
   variant: PropTypes.oneOf(["primary", "secondary", "success", "danger"]), // Button variants
   type: PropTypes.oneOf(["button", "submit", "reset"]), // Button types
   disabled: PropTypes.bool, // Disable state
-  ariaLabel: PropTypes.string, // Accessible label
 };
 
 export default Button;

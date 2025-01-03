@@ -1,7 +1,6 @@
 // MenuList.js
 import React from "react";
 import MenuItem from "./MenuItem";
-import PropTypes from "prop-types";
 
 const MenuList = ({ items }) => (
   <>
@@ -10,9 +9,5 @@ const MenuList = ({ items }) => (
     ))}
   </>
 );
-
-MenuList.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
 
 export default MenuList;

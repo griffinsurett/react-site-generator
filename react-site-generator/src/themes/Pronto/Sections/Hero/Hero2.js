@@ -1,4 +1,4 @@
-// src/themes/Pronto/Sections/Hero/Hero2.js
+// src/themes/Pronto/Sections/Hero/GenericHero.js
 import React from "react";
 import Section from "../../Components/Section";
 import ContentTemplate from "../../ContentTemplate";
@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 const GenericHero = ({ title, description, buttonText, buttonLink }) => {
   return (
-    <Section id="generic-hero" ariaLabel="Hero Section" className="h-60 flex flex-col justify-center items-center text-center">
+    <Section className="h-60 flex flex-col justify-center items-center text-center">
       <ContentTemplate
         title={title}
         sectionButtonText={buttonText || "Learn More"}

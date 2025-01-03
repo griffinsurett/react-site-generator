@@ -17,8 +17,6 @@ import PropTypes from "prop-types";
  */
 
 const Image = ({ src, alt, className = "", width, height, ...rest }) => {
-  const isDecorative = alt === "";
-
   return (
     <img
       src={src}
@@ -26,8 +24,6 @@ const Image = ({ src, alt, className = "", width, height, ...rest }) => {
       className={`object-cover ${className}`}
       width={width}
       height={height}
-      aria-hidden={isDecorative ? "true" : "false"}
-      role={isDecorative ? "presentation" : undefined}
       {...rest}
     />
   );

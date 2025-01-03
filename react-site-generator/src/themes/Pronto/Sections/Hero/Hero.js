@@ -1,4 +1,4 @@
-// src/themes/Pronto/Sections/Hero/Hero.js
+// src/themes/Pronto/Sections/Hero/HomeHero.js
 import React from "react";
 import Section from "../../Components/Section";
 import ContentTemplate from "../../ContentTemplate";
@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 const HomeHero = ({ data }) => {
   return (
-    <Section id="home-hero" ariaLabel="Hero Section" className="h-screen flex items-center justify-center">
+    <Section id="home-hero" className="h-screen flex items-center justify-center">
       <ContentTemplate
         title={data.siteTitle}
         heading={data.siteTagline}

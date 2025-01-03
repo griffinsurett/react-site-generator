@@ -11,8 +11,8 @@ const AboutInfo = ({ data }) => {
   const items = getItemData(data);
 
   return (
-    <Section id="about-info" ariaLabel="About Information">
-      <ContentTemplate data={data} sectionButtonText="Learn More">
+    <Section id="about-info">
+      <ContentTemplate data={data}>
         <ItemsTemplate
           items={items}
           ItemComponent={({ icon, title, description, hasPage, slug }) => (

@@ -8,18 +8,17 @@ import PropTypes from "prop-types";
 
 const Contact = ({ data }) => {
   return (
-    <Section id="contact" ariaLabel="Contact Information">
+    <Section id="contact">
       <ContentTemplate data={data} sectionButtonText="Contact Us" ifButton={false}>
         <div className="flex flex-col">
           {data.contactInfo.map((info, index) => (
-            <div key={index} className="flex items-center mb-2">
+            <div key={index} className="flex items-center">
               <Button 
                 to={info.href} 
                 variant="secondary" 
-                className="hover:underline flex items-center"
-                ariaLabel={`Contact via ${info.value}`}
+                className="hover:underline"
               >
-                <Icon icon={info.icon} className="w-6 h-6 mr-2" ariaLabel={`${info.value} icon`} />
+              {<Icon icon={info.icon} className="w-6 h-6" />}
                 {info.value}
               </Button>
             </div>
