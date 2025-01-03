@@ -3,40 +3,26 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-/**
- * Icon Component
- *
- * Renders a FontAwesome icon with standardized styling.
- *
- * Props:
- * - icon: The FontAwesome icon object.
- * - className: Additional CSS classes for customization.
- * - size: Size of the icon (e.g., 'lg', '2x').
- * - color: Color of the icon.
- * - ariaLabel: Accessible label for the icon, if it conveys meaning.
- * - ...rest: Any other props to pass to the FontAwesomeIcon component.
- */
-
-const Icon = ({ icon, className = "", size, color, ariaLabel, ...rest }) => {
+const Icon = React.memo(({ icon, className = "", size, color, ariaLabel, ...rest }) => {
   return (
     <FontAwesomeIcon
       icon={icon}
       className={`${className}`}
       size={size}
       color={color}
-      aria-hidden={!ariaLabel} // Hide if no ariaLabel provided
-      aria-label={ariaLabel} // Provide label if given
+      aria-hidden={!ariaLabel}
+      aria-label={ariaLabel}
       {...rest}
     />
   );
-};
+});
 
 Icon.propTypes = {
-  icon: PropTypes.object.isRequired, // FontAwesome icon object
+  icon: PropTypes.object.isRequired,
   className: PropTypes.string,
   size: PropTypes.string,
   color: PropTypes.string,
-  ariaLabel: PropTypes.string, // Accessible label
+  ariaLabel: PropTypes.string,
 };
 
 export default Icon;

@@ -1,78 +1,71 @@
 // src/themes/Pronto/CMSDisplayTheme.js
-import React from "react";
-import { useCMSContext } from "../../CMS/CMSContext"; // Import our context
+import React, { Suspense } from "react";
+import { useCMSContext } from "../../CMS/CMSContext";
 import MenuManager from "./Components/Menu/MenuManager";
-import HomeHero from "./Sections/Hero/Hero";
-import GenericHero from "./Sections/Hero/Hero2";
-import About from "./Sections/About/About";
-import Services from "./Sections/Services";
-import Contact from "./Sections/Contact";
-import Testimonials from "./Sections/Testimonials";
-import Projects from "./Sections/Projects";
-import FAQ from "./Sections/FAQ";
 import Header from "./Sections/Header/Header";
 import Footer from "./Sections/Footer";
-import AboutInfo from "./Sections/About/AboutInfo";
-import AboutPurpose from "./Sections/About/AboutPurpose";
-import Process from "./Sections/Process";
-import WhyChooseUs from "./Sections/About/WhyChooseUs";
-import Benefits from "./Sections/About/Benefits";
+import Loader from "./Components/Loader";
 
-// Map section keys to components
+// Lazy load sections
+const HomeHero = React.lazy(() => import("./Sections/Hero/Hero"));
+const GenericHero = React.lazy(() => import("./Sections/Hero/Hero2"));
+
 const sectionComponents = {
-  about: About,
-  services: Services,
-  contact: Contact,
-  testimonials: Testimonials,
-  projects: Projects,
-  faq: FAQ,
-  aboutInfo: AboutInfo,
-  purpose: AboutPurpose,
-  process: Process,
-  whyChooseUs: WhyChooseUs,
-  benefits: Benefits,
+  about: React.lazy(() => import("./Sections/About/About")),
+  services: React.lazy(() => import("./Sections/Services")),
+  contact: React.lazy(() => import("./Sections/Contact")),
+  testimonials: React.lazy(() => import("./Sections/Testimonials")),
+  projects: React.lazy(() => import("./Sections/Projects")),
+  faq: React.lazy(() => import("./Sections/FAQ")),
+  aboutInfo: React.lazy(() => import("./Sections/About/AboutInfo")),
+  purpose: React.lazy(() => import("./Sections/About/AboutPurpose")),
+  process: React.lazy(() => import("./Sections/Process")),
+  whyChooseUs: React.lazy(() => import("./Sections/About/WhyChooseUs")),
+  benefits: React.lazy(() => import("./Sections/About/Benefits")),
 };
 
-const CMSDisplayTheme = () => {
-  // Read from CMSContext
+const CMSDisplayTheme = React.memo(() => {
   const { loading, pageStructure, siteSettings, pageId } = useCMSContext();
 
   if (loading || !pageStructure) {
-    return <p role="status" aria-live="polite">Loading...</p>;
+    return <Loader />;
   }
 
-  // Initialize MenuManager
   const menuManager = new MenuManager(siteSettings);
-
   const { title, description, sections } = pageStructure;
 
   return (
     <div className="flex flex-col min-h-screen">
       <Header menuManager={menuManager} siteSettings={siteSettings} />
 
-      {pageId === "home" ? (
-        <HomeHero data={siteSettings} />
-      ) : (
-        <GenericHero title={title} description={description} />
-      )}
+      <Suspense fallback={<Loader />}>
+        {pageId === "home" ? (
+          <HomeHero data={siteSettings} />
+        ) : (
+          <GenericHero title={title} description={description} />
+        )}
+      </Suspense>
 
-      {/* Main content area */}
       <main className="flex-grow" role="main">
-        {sections
-          .filter(({ key }) => key !== "hero") // Exclude hero
-          .map(({ key, data }) => {
-            const SectionComponent = sectionComponents[key];
-            return SectionComponent ? (
-              <SectionComponent key={key} data={data} />
-            ) : (
-              <p key={key} role="alert">Content unavailable for section: {key}</p>
-            );
-          })}
+        <Suspense fallback={<Loader />}>
+          {sections
+            .filter(({ key }) => key !== "hero")
+            .map(({ key, data }) => {
+              const SectionComponent = sectionComponents[key];
+              return SectionComponent ? (
+                <SectionComponent key={key} data={data} />
+              ) : (
+                <p key={key} role="alert">
+                  Content unavailable for section: {key}
+                </p>
+              );
+            })}
+        </Suspense>
       </main>
 
       <Footer menuManager={menuManager} siteSettings={siteSettings} />
     </div>
   );
-};
+});
 
 export default CMSDisplayTheme;
