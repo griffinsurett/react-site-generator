@@ -1,0 +1,30 @@
+/* styles.css */
+
+/* Custom global styles (if any) */
+body {
+  @apply text-gray-800 bg-white;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif;
+  line-height: 1.2;
+}
+
+h1 {
+  @apply text-3xl;
+}
+
+h2 {
+  @apply text-2xl;
+}
+
+p {
+  @apply text-base;
+}
+
+a {
+  @apply text-blue-600 hover:text-blue-800 transition-colors duration-300;
+}

@@ -1,21 +1,11 @@
 // src/CMS/CMSContext.js
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  lazy,
-  Suspense,
-  useMemo,
-} from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getPageStructure } from "./Utils/DynamicContent/GetPageStructure";
 import { getSiteSettings } from "./Utils/GetContent/GetSettings";
 import { setMetaInfo } from "./Utils/SEO/SetMetaInfo";
-import Content from "./Content";
-
-// Lazy-load the "Pronto" theme using React.lazy
-const ProntoTheme = lazy(() => import("../themes/Pronto/CMSDisplayTheme"));
+import Content from "./Content"; 
+import Pronto from "../themes/Pronto/CMSDisplayTheme"; 
 
 const CMSContext = createContext(null);
 
@@ -32,26 +22,30 @@ export const CMSProvider = ({ children }) => {
     siteSettings: null,
   });
 
+  // You can store the chosen theme in state if you anticipate theme switching
+  // For now, we only have "Pronto":
+  const [ThemeComponent] = useState(() => Pronto);
+
   useEffect(() => {
-    const loadCMSData = async () => {
-      setCmsData((prev) => ({ ...prev, loading: true }));
+    // Similar to the old "fetchContent" from useThemeContent
+    const loadCMSData = () => {
       const pageStructure = getPageStructure(pageId);
       const siteSettings = { ...getSiteSettings(), queries: Content.queries };
 
       // If valid, set meta tags just like before
       if (pageStructure && siteSettings) {
+        const keywords = [
+          ...(pageStructure.keywords || []),
+          ...(siteSettings.keywords || []),
+        ];
+
         setMetaInfo({
           title: pageStructure.title,
           description: pageStructure.description,
-          keywords: [
-            ...(pageStructure.keywords || []),
-            ...(siteSettings.keywords || []),
-          ],
+          keywords,
           siteTitle: siteSettings.siteTitle,
           author: siteSettings.businessOwner,
-          image:
-            pageStructure.featuredImage || siteSettings.siteLogo || null,
-          url: window.location.href,
+          image: pageStructure.featuredImage || siteSettings.siteLogo,
         });
       }
 
@@ -62,34 +56,24 @@ export const CMSProvider = ({ children }) => {
       });
     };
 
+    // Reset to loading true each time location or pageId changes
+    setCmsData((prev) => ({ ...prev, loading: true }));
     loadCMSData();
   }, [location, pageId]);
 
-  // Memoize the context value to prevent unnecessary re-renders
-  const contextValue = useMemo(
-    () => ({
-      ...cmsData, // loading, pageStructure, siteSettings
-      pageId, // current page
-      setPageId, // function to switch page
-      ThemeComponent: ProntoTheme, // the chosen theme component
-    }),
-    [cmsData, pageId]
-  );
+  // Combine everything we want to expose to the rest of the app
+  const contextValue = {
+    ...cmsData,         // loading, pageStructure, siteSettings
+    pageId,             // current page
+    setPageId,          // function to switch page
+    ThemeComponent,     // the chosen theme component
+  };
 
   return (
     <CMSContext.Provider value={contextValue}>
-      <Suspense fallback={<Loader />}>
-        {children}
-      </Suspense>
+      {children}
     </CMSContext.Provider>
   );
 };
 
 export const useCMSContext = () => useContext(CMSContext);
-
-// Reusable Loader Component for Suspense
-const Loader = React.memo(() => (
-  <div className="loader">
-    <h2>Loading...</h2>
-  </div>
-));
