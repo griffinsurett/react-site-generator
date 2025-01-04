@@ -1,5 +1,4 @@
 // Content.js
-import { memo } from "react"
 import processDynamicContent from "./Utils/DynamicContent/DynamicContentUtils";
 import defaultPages from "./DefaultPages";
 import { processHomepage } from "./Utils/StaticPages/HomepageUtils";
