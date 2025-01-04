@@ -12,18 +12,9 @@
     "react-router-dom": "^7.1.1",
     "react-scripts": "^5.0.1"
   },
-  "reactSnap": {
-    "inlineCss": true,
-    "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
-    "minify": true,
-    "crawl": true,
-    "source": "build",
-    "target": "build"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "react-snap",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -48,7 +39,6 @@
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
-    "react-snap": "^1.23.0",
     "tailwindcss": "^3.4.17"
   }
 }
