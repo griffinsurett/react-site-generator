@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getPageStructure } from "./Utils/DynamicContent/GetPageStructure";
 import { getSiteSettings } from "./Utils/GetContent/GetSettings";
-import { setMetaInfo } from "./Utils/SEO/SetMetaInfo";
+import useMeta from "./Utils/SEO/UseMeta"; // Import the custom hook
 import Content from "./Content"; 
 import Pronto from "../themes/Pronto/CMSDisplayTheme"; 
 
@@ -39,14 +39,8 @@ export const CMSProvider = ({ children }) => {
           ...(siteSettings.keywords || []),
         ];
 
-        setMetaInfo({
-          title: pageStructure.title,
-          description: pageStructure.description,
-          keywords,
-          siteTitle: siteSettings.siteTitle,
-          author: siteSettings.businessOwner,
-          image: pageStructure.featuredImage || siteSettings.siteLogo,
-        });
+        // Metadata is now managed by the useMeta hook
+        // Pass all necessary metadata to the hook below
       }
 
       setCmsData({
@@ -60,6 +54,20 @@ export const CMSProvider = ({ children }) => {
     setCmsData((prev) => ({ ...prev, loading: true }));
     loadCMSData();
   }, [location, pageId]);
+
+  // Utilize the useMeta hook here
+  useMeta({
+    title: cmsData.pageStructure?.title || "",
+    description: cmsData.pageStructure?.description || "",
+    keywords: [
+      ...(cmsData.pageStructure?.keywords || []),
+      ...(cmsData.siteSettings?.keywords || []),
+    ],
+    siteTitle: cmsData.siteSettings?.siteTitle || "",
+    author: cmsData.siteSettings?.businessOwner || "",
+    image: cmsData.pageStructure?.featuredImage || cmsData.siteSettings?.siteLogo || null,
+    url: window.location.href,
+  });
 
   // Combine everything we want to expose to the rest of the app
   const contextValue = {
