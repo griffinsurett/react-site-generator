@@ -18,23 +18,27 @@ const useMeta = ({ title, description, keywords = [], siteTitle, author, image =
     }
 
     // Helper to set or update a meta tag
-    const setMetaTag = (selector, attribute, value) => {
+    const setMetaTag = (selector, attribute, contentValue) => {
       let element = document.querySelector(selector);
       if (!element) {
-        element = document.createElement(attribute === "property" ? "meta" : "meta");
-        element.setAttribute(attribute === "property" ? "property" : "name", attribute === "property" ? "property" : "name");
+        element = document.createElement("meta");
+        if (attribute === "property") {
+          const propertyValue = selector.match(/property=['"](.+)['"]/);
+          if (propertyValue && propertyValue[1]) {
+            element.setAttribute("property", propertyValue[1]);
+          }
+        } else if (attribute === "name") {
+          const nameValue = selector.match(/name=['"](.+)['"]/);
+          if (nameValue && nameValue[1]) {
+            element.setAttribute("name", nameValue[1]);
+          }
+        }
         document.head.appendChild(element);
       }
-      if (prevMetaRef.current[selector] !== value) {
-        element.setAttribute(attribute === "property" ? "property" : "name", attribute === "property" ? "property" : "name");
-        element.setAttribute(attribute === "property" ? "property" : "name", attribute === "property" ? "property" : "name");
-        if (attribute === "property") {
-          element.setAttribute("property", selector.split("'")[1]);
-        } else {
-          element.setAttribute("name", selector.split("'")[1]);
-        }
-        element.setAttribute("content", value);
-        prevMetaRef.current[selector] = value;
+
+      if (prevMetaRef.current[selector] !== contentValue) {
+        element.setAttribute("content", contentValue);
+        prevMetaRef.current[selector] = contentValue;
       }
     };
 
@@ -68,8 +72,8 @@ const useMeta = ({ title, description, keywords = [], siteTitle, author, image =
       "og:type": "website",
     };
 
-    Object.entries(ogTags).forEach(([property, content]) => {
-      setMetaTag(`meta[property='${property}']`, "property", content);
+    Object.entries(ogTags).forEach(([property, contentValue]) => {
+      setMetaTag(`meta[property='${property}']`, "property", contentValue);
     });
 
     // Twitter Card Tags
@@ -80,8 +84,8 @@ const useMeta = ({ title, description, keywords = [], siteTitle, author, image =
       "twitter:card": "summary_large_image",
     };
 
-    Object.entries(twitterTags).forEach(([name, content]) => {
-      setMetaTag(`meta[name='${name}']`, "name", content);
+    Object.entries(twitterTags).forEach(([name, contentValue]) => {
+      setMetaTag(`meta[name='${name}']`, "name", contentValue);
     });
 
     // Structured Data (Schema.org)
@@ -110,6 +114,7 @@ const useMeta = ({ title, description, keywords = [], siteTitle, author, image =
     }
 
   }, [title, description, keywords, siteTitle, author, image, url]);
+
 };
 
 export default useMeta;
