@@ -467,20 +467,6 @@ const { processedCollections, processedPages } = processDynamicContent({
   collections,
 });
 
-// Add relationships
-// const relationalUtil = new RelationalUtil({
-//   collections: processedCollections,
-// });
-
-// Define relationships
-// relationalUtil.relate("services", "/construction", "projects", "/kitchen-remodel");
-// relationalUtil.relate("services", "/painting", "projects", "/kitchen-remodel");
-// relationalUtil.relate("projects", "/kitchen-remodel", "testimonials", "/john-doe");
-// // relationalUtil.relate("services", "/demolition", "projects", "/garage-demolition");
-// relationalUtil.relate("services", "/painting", "projects", "/garage-demolition-in-nj");
-// // relationalUtil.relate("projects", "/garage-demolition", "testimonials", "/jane-smith");
-// relationalUtil.relate("services", "/construction", "faq", 1);
-
 setLogo(siteSettings.siteLogo);
 
 // Export menus along with the rest of the content

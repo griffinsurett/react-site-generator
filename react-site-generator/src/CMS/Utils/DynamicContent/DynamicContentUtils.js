@@ -16,7 +16,7 @@ const processDynamicContent = ({ pages, collections }) => {
         sections: collection.sections,
         slug: collection.slug,
         isCollection: true,
-        crawl: true,
+        // crawl: true,
       });
       // console.log(processedPages)
     }
@@ -40,7 +40,7 @@ const processDynamicContent = ({ pages, collections }) => {
         isCollection: true,
 
         // Automatically set crawl = true for item pages
-        crawl: true,
+        // crawl: true,
       });
       // Mark the item as having a page
       item.hasPage = true;

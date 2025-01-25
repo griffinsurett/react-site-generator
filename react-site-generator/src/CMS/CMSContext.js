@@ -5,9 +5,11 @@ import { getPageStructure } from "./Utils/DynamicContent/GetPageStructure";
 import { getSiteSettings } from "./Utils/GetContent/GetSettings";
 import useMeta from "./Utils/SEO/UseMeta"; // Import the custom hook
 import Content from "./Content"; 
-import Pronto from "../themes/Pronto/CMSDisplayTheme"; 
 
 const CMSContext = createContext(null);
+
+// Lazy load the Pronto theme
+const Pronto = React.lazy(() => import("../themes/Pronto/CMSDisplayTheme"));
 
 export const CMSProvider = ({ children }) => {
   const location = useLocation();
@@ -22,38 +24,8 @@ export const CMSProvider = ({ children }) => {
     siteSettings: null,
   });
 
-  // You can store the chosen theme in state if you anticipate theme switching
-  // For now, we only have "Pronto":
-  const [ThemeComponent] = useState(() => Pronto);
-
-  useEffect(() => {
-    // Similar to the old "fetchContent" from useThemeContent
-    const loadCMSData = () => {
-      const pageStructure = getPageStructure(pageId);
-      const siteSettings = { ...getSiteSettings(), queries: Content.queries };
-
-      // If valid, set meta tags just like before
-      if (pageStructure && siteSettings) {
-        const keywords = [
-          ...(pageStructure.keywords || []),
-          ...(siteSettings.keywords || []),
-        ];
-
-        // Metadata is now managed by the useMeta hook
-        // Pass all necessary metadata to the hook below
-      }
-
-      setCmsData({
-        loading: false,
-        pageStructure,
-        siteSettings,
-      });
-    };
-
-    // Reset to loading true each time location or pageId changes
-    setCmsData((prev) => ({ ...prev, loading: true }));
-    loadCMSData();
-  }, [location, pageId]);
+  // New state to track if it's the initial load
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Utilize the useMeta hook here
   useMeta({
@@ -69,12 +41,41 @@ export const CMSProvider = ({ children }) => {
     url: window.location.href,
   });
 
+  useEffect(() => {
+    // Function to load CMS data
+    const loadCMSData = () => {
+      const pageStructure = getPageStructure(pageId);
+      const siteSettings = { ...getSiteSettings(), queries: Content.queries };
+
+      setCmsData({
+        loading: false,
+        pageStructure,
+        siteSettings,
+      });
+
+      // If it's the initial load, mark it as complete
+      if (isInitialLoad) {
+        setIsInitialLoad(false);
+      }
+    };
+
+    if (isInitialLoad) {
+      // Only set loading to true during the initial load
+      setCmsData((prev) => ({ ...prev, loading: true }));
+      loadCMSData();
+    } else {
+      // For client-side navigations, do not set loading to true
+      loadCMSData();
+    }
+  }, [location, pageId, isInitialLoad]);
+
   // Combine everything we want to expose to the rest of the app
   const contextValue = {
-    ...cmsData,         // loading, pageStructure, siteSettings
-    pageId,             // current page
-    setPageId,          // function to switch page
-    ThemeComponent,     // the chosen theme component
+    ...cmsData,             // loading, pageStructure, siteSettings
+    pageId,                 // current page
+    setPageId,              // function to switch page
+    ThemeComponent: Pronto, // the chosen theme component (lazy loaded)
+    isInitialLoad,         // expose isInitialLoad
   };
 
   return (
