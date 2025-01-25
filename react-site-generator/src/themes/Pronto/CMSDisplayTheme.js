@@ -1,5 +1,5 @@
 // src/themes/Pronto/CMSDisplayTheme.js
-import React, { Suspense } from "react";
+import React from "react";
 import { useCMSContext } from "../../CMS/CMSContext";
 import MenuManager from "./Components/Menu/MenuManager";
 import Header from "./Sections/Header/Header";
